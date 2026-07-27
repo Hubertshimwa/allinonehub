@@ -1,0 +1,7 @@
+import { NextResponse, type NextRequest } from "next/server";
+import { z } from "zod";
+import { Resend } from "resend";
+import { checkRateLimit } from "@/lib/rate-limit";
+
+const schema = z.object({ name: z.string().trim().min(2).max(100), email: z.email().max(254), topic: z.string().trim().max(80), message: z.string().trim().min(10).max(4000) });
+export async function POST(request: NextRequest) { const identifier = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous"; const limit = await checkRateLimit(`contact:${identifier}`); if (!limit.success) return NextResponse.json({ error: "Please wait a minute before trying again." }, { status: 429 }); const parsed = schema.safeParse(await request.json().catch(() => null)); if (!parsed.success) return NextResponse.json({ error: "Please complete each field correctly." }, { status: 400 }); if (!process.env.RESEND_API_KEY || !process.env.EMAIL_FROM || !process.env.SUPPORT_EMAIL) return NextResponse.json({ error: "Contact email is not configured yet." }, { status: 503 }); try { const resend = new Resend(process.env.RESEND_API_KEY); const result = await resend.emails.send({ from: process.env.EMAIL_FROM, to: process.env.SUPPORT_EMAIL, replyTo: parsed.data.email, subject: `[Allinonehub] ${parsed.data.topic}`, text: `From: ${parsed.data.name} <${parsed.data.email}>\n\n${parsed.data.message}` }); if (result.error) throw result.error; return NextResponse.json({ ok: true }); } catch { return NextResponse.json({ error: "Your message could not be sent. Please try again." }, { status: 502 }); } }

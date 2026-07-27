@@ -1,0 +1,7 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { AuthForm } from "@/components/auth-form";
+import { Logo } from "@/components/logo";
+
+export const metadata: Metadata = { title: "Join free" };
+export default function SignUpPage() { return <main className="grid min-h-screen bg-slate-50 lg:grid-cols-[1fr_.85fr]"><section className="flex flex-col p-5 sm:p-8"><Logo /><div className="flex flex-1 items-center justify-center py-10"><AuthForm mode="sign-up" /></div><p className="text-center text-xs text-slate-500">By creating an account, you agree to our <Link href="/terms" className="underline">Terms</Link> and <Link href="/privacy" className="underline">Privacy Policy</Link>.</p></section><aside className="relative hidden overflow-hidden bg-blue-600 p-14 text-white lg:block"><div className="absolute -left-28 top-10 size-96 rounded-full bg-cyan-300/30 blur-3xl" /><div className="absolute bottom-8 right-8 rounded-3xl border border-white/20 bg-white/10 p-7 backdrop-blur"><p className="text-sm font-bold text-blue-100">Your space is ready for</p><ul className="mt-4 space-y-4 text-lg font-bold"><li>✦ Opportunities that fit you</li><li>✦ A learning path with momentum</li><li>✦ People cheering you forward</li></ul></div><div className="relative mt-40"><p className="text-sm font-bold uppercase tracking-[.2em] text-blue-100">Start anywhere</p><h2 className="mt-5 max-w-md text-5xl font-black leading-[.98] tracking-[-.05em]">The path becomes clear when you begin.</h2></div></aside></main>; }

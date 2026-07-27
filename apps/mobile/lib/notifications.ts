@@ -1,0 +1,3 @@
+import * as Notifications from "expo-notifications";
+import { supabase } from "./supabase";
+export async function enableNotifications() { const { status: existing } = await Notifications.getPermissionsAsync(); const status = existing === "granted" ? existing : (await Notifications.requestPermissionsAsync()).status; if (status !== "granted") return { enabled: false, reason: "permission-denied" }; const token = (await Notifications.getDevicePushTokenAsync()).data; const { data: { user } } = await supabase.auth.getUser(); if (user && typeof token === "string") await supabase.from("push_devices").upsert({ user_id: user.id, token, platform: "android" }, { onConflict: "token" }); return { enabled: true }; }

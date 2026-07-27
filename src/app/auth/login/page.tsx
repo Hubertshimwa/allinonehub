@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import { AuthForm } from "@/components/auth-form";
+import { Logo } from "@/components/logo";
+import Link from "next/link";
+
+export const metadata: Metadata = { title: "Log in" };
+export default function LoginPage() { return <main className="grid min-h-screen bg-slate-50 lg:grid-cols-[1fr_.85fr]"><section className="flex flex-col p-5 sm:p-8"><Logo /><div className="flex flex-1 items-center justify-center py-10"><AuthForm mode="login" /></div><p className="text-center text-xs text-slate-500">By continuing, you agree to our <Link href="/terms" className="underline">Terms</Link> and <Link href="/privacy" className="underline">Privacy Policy</Link>.</p></section><AuthAside /></main>; }
+function AuthAside() { return <aside className="relative hidden overflow-hidden bg-slate-950 p-14 text-white lg:flex lg:flex-col lg:justify-end"><div className="absolute -right-20 -top-20 size-96 rounded-full bg-blue-500/30 blur-3xl" /><div className="absolute bottom-0 left-0 size-96 rounded-full bg-violet-500/20 blur-3xl" /><div className="relative"><p className="text-sm font-bold uppercase tracking-[.2em] text-blue-300">Allinonehub</p><h2 className="mt-5 max-w-md text-5xl font-black leading-[.98] tracking-[-.05em]">Every big future begins with one small step.</h2><blockquote className="mt-12 max-w-md border-l-2 border-blue-400 pl-5 text-lg leading-8 text-slate-300">“I went from not knowing where to begin to having a clear plan — and a community behind me.”</blockquote><p className="mt-4 text-sm font-bold text-white">Maya, community member</p></div></aside>; }

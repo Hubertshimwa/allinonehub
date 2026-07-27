@@ -1,0 +1,9 @@
+import type { Metadata } from "next";
+import { BrainCircuit, ShieldCheck, Sparkles } from "lucide-react";
+import { AssistantChat } from "@/components/assistant-chat";
+import { PageHero } from "@/components/page-hero";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+export const metadata: Metadata = { title: "AI guide" };
+export default function AiPage() { return <><SiteHeader /><main><PageHero eyebrow="A calm place to ask" title={<>A helpful guide for your <span className="text-gradient">next question.</span></>} description="Talk through a goal, untangle a technical problem, or find a place to start. You stay in control of every decision." /><section className="mx-auto grid max-w-6xl gap-10 px-5 py-14 lg:grid-cols-[.75fr_1.25fr] lg:px-8"><aside><div className="grid size-12 place-items-center rounded-2xl bg-violet-100 text-violet-700"><BrainCircuit className="size-6" /></div><h2 className="mt-5 text-2xl font-black tracking-tight text-slate-950">Useful guidance, not magic answers.</h2><p className="mt-3 leading-7 text-slate-600">Use the guide to clarify your thoughts. For applications, legal, medical, or financial decisions, always verify important information with official sources or a qualified person.</p><div className="mt-8 space-y-4"><Note icon={Sparkles} text="Explore scholarships and career paths" /><Note icon={ShieldCheck} text="Get a simple explanation of a tech concept" /><Note icon={BrainCircuit} text="Create a small, realistic learning plan" /></div></aside><AssistantChat /></section></main><SiteFooter /></>; }
+function Note({ icon: Icon, text }: { icon: typeof Sparkles; text: string }) { return <div className="flex items-center gap-3 text-sm font-semibold text-slate-700"><span className="grid size-8 place-items-center rounded-lg bg-blue-50 text-blue-600"><Icon className="size-4" /></span>{text}</div>; }

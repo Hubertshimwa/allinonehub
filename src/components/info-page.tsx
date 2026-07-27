@@ -1,0 +1,5 @@
+import { ShieldCheck } from "lucide-react";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { PageHero } from "@/components/page-hero";
+export function InfoPage({ eyebrow, title, description, sections }: { eyebrow: string; title: string; description: string; sections: { heading: string; text: string }[] }) { return <><SiteHeader /><main><PageHero eyebrow={eyebrow} title={title} description={description} /><article className="mx-auto max-w-3xl px-5 py-14 lg:px-8"><div className="mb-10 flex gap-3 rounded-2xl bg-blue-50 p-4 text-sm leading-6 text-blue-900"><ShieldCheck className="mt-0.5 size-5 shrink-0" />We use plain language because trust is part of the product.</div><div className="space-y-10">{sections.map((section) => <section key={section.heading}><h2 className="text-xl font-black tracking-tight text-slate-950">{section.heading}</h2><p className="mt-3 leading-7 text-slate-600">{section.text}</p></section>)}</div></article></main><SiteFooter /></>; }

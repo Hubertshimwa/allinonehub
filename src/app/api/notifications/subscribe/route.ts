@@ -1,0 +1,6 @@
+import { NextResponse, type NextRequest } from "next/server";
+import { z } from "zod";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { createClient } from "@/lib/supabase/server";
+const schema = z.object({ token: z.string().min(20).max(4096), platform: z.enum(["web", "android", "ios", "desktop"]).default("web") });
+export async function POST(request: NextRequest) { const parsed = schema.safeParse(await request.json().catch(() => null)); if (!parsed.success) return NextResponse.json({ error: "Invalid device token." }, { status: 400 }); const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) return NextResponse.json({ error: "Sign in to enable notifications." }, { status: 401 }); const limit = await checkRateLimit(`push:${user.id}`); if (!limit.success) return NextResponse.json({ error: "Please wait before trying again." }, { status: 429 }); const { error } = await supabase.from("push_devices").upsert({ user_id: user.id, token: parsed.data.token, platform: parsed.data.platform, updated_at: new Date().toISOString() }, { onConflict: "token" }); if (error) return NextResponse.json({ error: "Unable to save this device." }, { status: 500 }); return NextResponse.json({ ok: true }); }

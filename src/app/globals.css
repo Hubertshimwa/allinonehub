@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root { --background: #ffffff; --foreground: #0f172a; }
+* { border-color: rgb(226 232 240); }
+html { scroll-behavior: smooth; }
+body { background: var(--background); color: var(--foreground); font-family: Arial, Helvetica, sans-serif; }
+::selection { background: #bfdbfe; color: #172554; }
+.text-gradient { background: linear-gradient(108deg, #2563eb 5%, #7c3aed 48%, #db2777 94%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.aurora { background: radial-gradient(ellipse 45% 55% at 20% 10%, rgba(129, 140, 248, .55), transparent), radial-gradient(ellipse 42% 55% at 65% 15%, rgba(56, 189, 248, .5), transparent), radial-gradient(ellipse 35% 45% at 93% 20%, rgba(196, 181, 253, .6), transparent); filter: blur(24px); }
